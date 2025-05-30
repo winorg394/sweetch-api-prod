@@ -1,0 +1,64 @@
+@baseUrl = http://192.168.100.25:8001/api
+@auth_token=58|TRD0awFpRUSHGuHaY3HFRdWyQZoC6U4tb5OBUo98e70d87ae
+
+### Register a User
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "first_name": "John Dode",
+    "last_name": "John Dod1e",
+    "email": "johnss.doed@example.com",
+    "phone": "1234569022",
+    "password": "passwordd123",
+    "password_confirmation": "passwordd123",
+    "device_name": "passwordd123"
+}
+
+### Login User
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "winorg68@gmail.com",
+    "password": "1234",
+    "device_name": "web"
+}
+
+### Logout User
+POST {{baseUrl}}/logout
+Authorization: Bearer {{auth_token}}
+
+### Verify Email
+POST {{baseUrl}}/verify-email
+Content-Type: application/json
+
+{
+    "email": "john.doe@example.com",
+    "otp_code": "password123"
+}
+
+### Verify Phone
+POST {{baseUrl}}/verify-phone
+Content-Type: application/json
+
+{
+    "phone": "1234567890",
+    "otp_code": "123456"
+}
+
+### Send Email OTP
+POST {{baseUrl}}/send-email-otp
+Content-Type: application/json
+
+{
+    "email": "john.doe@example.com"
+}
+
+### Send Phone OTP
+POST {{baseUrl}}/send-phone-otp
+Content-Type: application/json
+
+{
+    "phone": "1234567890"
+}

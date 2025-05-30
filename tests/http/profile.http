@@ -1,0 +1,33 @@
+@baseUrl = https://fa8c-41-202-219-169.ngrok-free.app/api
+@auth_token=48|VGiDmqaUGWorUsGkqVGWcANY0iiyuqY7UBZSmNSk47f2b4f4
+
+### Get Profile
+GET {{baseUrl}}/profile
+Authorization: Bearer {{auth_token}}
+
+### Update Profile
+POST {{baseUrl}}/profile
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "first_name": "John",
+    "second_name": "Doe",
+    "whatsapp": "+123456789",
+    "id_type": "Passport",
+    "niu": "123-456-789",
+    "rejection_reason": null,
+    "comment": "This is a sample comment."
+}
+
+### Upload Profile Picture
+POST {{baseUrl}}/profile/picture
+Authorization: Bearer {{auth_token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="picture"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./path/to/your/profile.jpg
+------WebKitFormBoundary--

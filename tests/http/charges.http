@@ -1,0 +1,83 @@
+@baseUrl = http://192.168.100.25:8001/api
+@auth_token=61|JiWAw9pQ74Hu0mjkLkhJyvsPIn0eQ2CUyl6M2Gsbb875e273
+
+### Calculate Transaction Charges
+POST {{baseUrl}}/calculate-charges
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "amount": "800",
+    "operator": "Orange Money",
+    "is_international": false,
+    "withdrawal_fee":true
+}
+
+### Response example for calculate charges:
+# {
+#     "success": true,
+#     "data": {
+#         "original_amount": 1000,
+#         "charges": 120,
+#         "total_amount": 1120,
+#         "formatted_total": "1,120.00 F CFA"
+#     }
+# }
+
+### Get Payment Operators
+GET {{baseUrl}}/payment-operators
+Authorization: Bearer {{auth_token}}
+
+### Response example for payment operators:
+# {
+#     "success": true,
+#     "data": {
+#         "user_country": "CI",
+#         "operators": [
+#             {
+#                 "name": "Orange Money",
+#                 "image": "assets/images/orange_money.png",
+#                 "is_international": false,
+#                 "charges": {
+#                     "percentage": 0.02,
+#                     "fixed_fee": 100,
+#                     "currency": "XOF"
+#                 },
+#                 "available_countries": ["CI", "SN", "ML", "BF"]
+#             },
+#             {
+#                 "name": "MTN Mobile Money",
+#                 "image": "assets/images/mtn_momo.png",
+#                 "is_international": false,
+#                 "charges": {
+#                     "percentage": 0.025,
+#                     "fixed_fee": 100,
+#                     "currency": "XOF"
+#                 },
+#                 "available_countries": ["CI", "GH", "NG", "CM"]
+#             }
+#         ]
+#     }
+# }
+
+### Calculate International Transaction Charges
+POST {{baseUrl}}/calculate-charges
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "amount": 5000,
+    "operator": "MTN Mobile Money",
+    "is_international": true
+}
+
+### Response example for international charges:
+# {
+#     "success": true,
+#     "data": {
+#         "original_amount": 5000,
+#         "charges": 700,
+#         "total_amount": 5700,
+#         "formatted_total": "5,700.00 F CFA"
+#     }
+# }

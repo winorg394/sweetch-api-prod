@@ -1,0 +1,52 @@
+@baseUrl = http://192.168.189.5:8001/api
+@auth_token=76|iVexMBT09QUwqfZUXUD7JLAFKc0SymeTxwR4m4N0af2e19b3
+
+### Get all tontine members by tontine_id
+GET {{baseUrl}}/tontine-members?tontine_id=1
+Authorization: Bearer {{auth_token}}
+
+### Update tontine members order
+POST {{baseUrl}}/tontine-members/update-order
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "order": [
+        {
+            "id": 1,
+            "position": 2,
+            "colleted": false
+        },
+        {
+            "id": 2,
+            "position": 1,
+            "colleted": true
+        }
+    ]
+}
+
+### Example successful response for GET /tontine-members:
+# [
+#     {
+#         "id": 1,
+#         "tontine_id": 1,
+#         "member_id": 1,
+#         "position": 1,
+#         "colleted": false,
+#         "created_at": "2024-01-01T00:00:00.000000Z",
+#         "updated_at": "2024-01-01T00:00:00.000000Z",
+#         "tontine": {
+#             "id": 1,
+#             "name": "Weekly Savings"
+#         },
+#         "member": {
+#             "id": 1,
+#             "name": "John Doe"
+#         }
+#     }
+# ]
+
+### Example successful response for POST /tontine-members/update-order:
+# {
+#     "success": true
+# }

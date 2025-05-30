@@ -1,0 +1,132 @@
+@baseUrl = http://192.168.189.5:8001/api
+@auth_token=76|iVexMBT09QUwqfZUXUD7JLAFKc0SymeTxwR4m4N0af2e19b3
+
+### Get all tontines
+GET {{baseUrl}}/njangui
+Authorization: Bearer {{auth_token}}
+
+### Create new tontine
+POST {{baseUrl}}/njangui
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "name": "Weekly Savings",
+    "amount": 10000,
+    "deadline": "2024-12-31",
+    "start_date": "2024-01-01",
+    "frequency": "weekly",
+    "members": [2, 3, 4]  // Array of user IDs to invite
+}
+
+### Get tontine details
+GET {{baseUrl}}/njangui/1
+Authorization: Bearer {{auth_token}}
+
+### Update tontine
+PUT {{baseUrl}}/njangui/1
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "name": "Updated Tontine Name",
+    "amount": 15000,
+    "deadline": "2025-01-31"
+}
+
+### Delete tontine
+DELETE {{baseUrl}}/njangui/1
+Authorization: Bearer {{auth_token}}
+
+### Get tontine members
+GET {{baseUrl}}/njangui/1/members
+Authorization: Bearer {{auth_token}}
+
+### Add member to tontine
+POST {{baseUrl}}/njangui/1/members
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "user_id": 5
+}
+
+### Remove member from tontine
+DELETE {{baseUrl}}/njangui/1/members/2
+Authorization: Bearer {{auth_token}}
+
+### Add contribution
+POST {{baseUrl}}/njangui/1/contributions
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "amount": 5000,
+    "member_id": 1  // ID of the tontine member (not user ID)
+}
+
+### Get contributions
+GET {{baseUrl}}/njangui/1/contributions
+Authorization: Bearer {{auth_token}}
+
+### Mark contribution as paid
+POST {{baseUrl}}/njangui/1/contributions/1/mark-paid
+Authorization: Bearer {{auth_token}}
+
+### Get tontine statistics
+GET {{baseUrl}}/njangui/1/stats
+Authorization: Bearer {{auth_token}}
+
+### Get tontine history
+GET {{baseUrl}}/njangui/1/history
+Authorization: Bearer {{auth_token}}
+
+### Invite to tontine
+POST {{baseUrl}}/njangui/1/invite
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "user_id": 9
+}
+
+### Accept/Reject invitation
+POST {{baseUrl}}/njangui/invitations/1/respond
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "response": "accept"  // or "reject"
+}
+
+### Example response for successful tontine creation:
+# {
+#     "id": 1,
+#     "name": "Weekly Savings",
+#     "amount": 10000,
+#     "deadline": "2024-12-31T00:00:00.000000Z",
+#     "creator_id": 1,
+#     "members": [
+#         {
+#             "id": 1,
+#             "user_id": 1,
+#             "is_admin": true
+#         },
+#         {
+#             "id": 2,
+#             "user_id": 2,
+#             "is_admin": false
+#         }
+#     ]
+# }
+
+### Example response for tontine stats:
+# {
+#     "total_contributions": 5000,
+#     "progress": 50.0,
+#     "members_count": 4,
+#     "paid_members_count": 2,
+#     "remaining_amount": 5000,
+#     "deadline": "2024-12-31T00:00:00.000000Z",
+#     "current_week": "Semaine N°6"
+# }

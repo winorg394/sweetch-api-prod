@@ -1,0 +1,137 @@
+@baseUrl = https://fa8c-41-202-219-169.ngrok-free.app/api
+@auth_token=46|X3xbmWG4tFbiPP7ORqvHSiyXFa9cGmdN5wRSkME8983d0ea9
+
+### Register a User
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "first_name": "John Dode",
+    "last_name": "John Dod1e",
+    "email": "johnss.doed@example.com",
+    "phone": "1234569022",
+    "password": "passwordd123",
+    "password_confirmation": "passwordd123",
+    "device_name": "passwordd123"
+}
+
+### Verify Email
+POST {{baseUrl}}/verify-email
+Content-Type: application/json
+
+{
+    "email": "john.doe@example.com",
+    "otp_code": "password123"  // Replace with the code received
+}
+
+### Verify Phone
+POST {{baseUrl}}/verify-phone
+Content-Type: application/json
+
+{
+    "phone": "1234567890",
+    "otp_code": "123456"  // Replace with the code received
+}
+
+### Upload ID Card
+POST {{baseUrl}}/documents/id-card/upload
+Authorization: Bearer <your_token>
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+------WebKitFormBoundary
+Content-Disposition: form-data; name="id_number"
+
+AB123456789
+------WebKitFormBoundary
+Content-Disposition: form-data; name="id_image"; filename="id_card.jpg"
+Content-Type: image/jpeg
+
+< ./path/to/your/id_card.jpg
+------WebKitFormBoundary--
+
+### Upload NIU
+POST {{baseUrl}}/documents/niu/upload
+Authorization: Bearer <your_token>
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+------WebKitFormBoundary
+Content-Disposition: form-data; name="niu"
+
+123-456-789
+------WebKitFormBoundary
+Content-Disposition: form-data; name="niu_document"; filename="niu_doc.pdf"
+Content-Type: application/pdf
+
+< ./path/to/your/niu_doc.pdf
+------WebKitFormBoundary--
+
+### Verify ID Card
+POST {{baseUrl}}/documents/id-card/verify
+Authorization: Bearer <your_token>
+Content-Type: application/json
+
+{
+    "id_number": "AB123456789"
+}
+
+### Verify NIU
+POST {{baseUrl}}/documents/niu/verify
+Authorization: Bearer <your_token>
+Content-Type: application/json
+
+{
+    "niu": "123-456-789"
+}
+
+
+### Login User
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "winorg68@gmail.com",
+    "password": "1234",
+    "device_name": "web"
+}
+
+### Response example for successful login:
+# {
+#     "success": true,
+#     "message": "Logged in successfully",
+#     "data": {
+#         "token": "your_token_here",
+#         "user": {
+#             "id": 1,
+#             "name": "John Doe",
+#             "email": "john.doe@example.com",
+#             ...
+#         },
+#         "token_type": "Bearer"
+#     }
+# }
+
+### Logout User
+POST {{baseUrl}}/logout
+Authorization: Bearer {{auth_token}}
+
+### Response example for successful logout:
+# {
+#     "success": true,
+#     "message": "Logged out successfully",
+#     "data": null
+# }
+
+
+### Send Email OTP
+POST {{baseUrl}}/send-email-otp
+Content-Type: application/json
+
+{
+    "email": "john.doe@example.com"
+}
+
+### Send Phone OTP
+POST {{baseUrl}}/send-phone-otp
+Content-Type: application/json
+
+{
+    "phone": "1234567890"
+}

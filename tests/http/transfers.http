@@ -1,0 +1,124 @@
+@baseUrl = http://192.168.168.5:8001/api
+@auth_token=65|j7syfo6KoEWzEaxqT60cHxLuQO6vIkYGWNERVmKo34486bff
+
+### Get Payment Operators (Regular)
+GET {{baseUrl}}/payment-operators
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+
+    "is_transfers": false
+}
+
+### Get Payment Operators (For Transfers)
+GET {{baseUrl}}/payment-operators
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "country_code": "CM",
+    "is_transfers": true
+}
+
+### Response example for payment operators:
+# {
+#     "success": true,
+#     "data": {
+#         "user_country": "CM",
+#         "countries": [
+#             {
+#                 "name": "Cameroun",
+#                 "code": "CM",
+#                 "currency": "XAF",
+#                 "flag": "https://flagcdn.com/cm.svg",
+#                 "available_operators": ["Orange Money", "MTN Mobile Money"]
+#             }
+#         ],
+#         "operators": [
+#             {
+#                 "name": "Orange Money",
+#                 "image": "https://images.seeklogo.com/...",
+#                 "is_international": false,
+#                 "charges": {
+#                     "percentage": 0.02,
+#                     "fixed_fee": 100,
+#                     "currency": "XOF"
+#                 },
+#                 "available_countries": ["CI", "SN", "ML", "BF", "CM"]
+#             }
+#         ]
+#     }
+# }
+
+### Make a Transfer
+POST {{baseUrl}}/transfer
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "amount": 10,
+    "description": "Test transfer",
+    "recipient_phone": "123654789",
+    "country_code": "CM",
+    "payment_method": "Orange Money",
+    "add_supplement": false
+}
+
+### Response example for transfer:
+# {
+#     "success": true,
+#     "data": {
+#         "transaction_id": "TRX6579e8b3e1234",
+#         "amount": 1000,
+#         "recipient": {
+#             "phone": "+237600000000",
+#             "name": "John Doe"
+#         },
+#         "payment_method": "Orange Money",
+#         "country": "CM",
+#         "date": "2023-12-13T15:30:45.000000Z"
+#     }
+# }
+
+### Failed Transfer (Insufficient Balance)
+POST {{baseUrl}}/transfer
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "amount": 999999,
+    "description": "Test transfer with insufficient balance",
+    "recipient_phone": "123654789",
+    "country_code": "CM",
+    "payment_method": "Orange Money",
+    "add_supplement": false
+}
+
+### Response example for failed transfer:
+# {
+#     "success": false,
+#     "message": "Insufficient balance",
+#     "data": null
+# }
+
+### Failed Transfer (Invalid Recipient)
+POST {{baseUrl}}/transfer
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+    "amount": 1000,
+    "description": "Test transfer to invalid recipient",
+    "recipient_phone": "+237999999999",
+    "country_code": "CM",
+    "payment_method": "Orange Money",
+    "add_supplement": false
+}
+
+### Response example for invalid recipient:
+# {
+#     "success": false,
+#     "message": "Recipient not found",
+#     "data": null
+# }

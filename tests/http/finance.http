@@ -1,0 +1,21 @@
+@baseUrl = https://fa8c-41-202-219-169.ngrok-free.app/api
+@auth_token=45|sD8Ex90A7hvvTZBMAetN7dOBEwhT9AFVEmWp5bA966dac6c3
+
+### Make a deposit
+POST {{baseUrl}}/deposit
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "amount": 100.00,
+  "description": "Initial deposit"
+}
+
+### Get wallet balance
+GET {{baseUrl}}/wallet/balance
+Authorization: Bearer {{auth_token}}
+
+
+### Get wallet balance
+GET {{baseUrl}}/wallet/transactions
+Authorization: Bearer {{auth_token}}
